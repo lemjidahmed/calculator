@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'mvn package -Dsk ipTests\n'
+                sh 'mvn package'
             }
 
         }
@@ -15,16 +15,16 @@ pipeline {
         stage('Report Bugs') {
             steps {
                 script {
-                     junit 'target/surefire-reports/*.xml'
-                script {
-                    def failedTests = []
-                    def results = currentBuild.rawBuild.getAction(hudson.tasks.junit.TestResultAction.class).getResult()
-                    results.getFailedTests().each {
-                        failedTests.add(it.getFullName())
+                    junit 'target/surefire-reports/*.xml'
+                    script {
+                        def failedTests = []
+                        def results = currentBuild.rawBuild.getAction(hudson.tasks.junit.TestResultAction.class).getResult()
+                        results.getFailedTests().each {
+                            failedTests.add(it.getFullName())
+                        }
+                        echo "Failed tests: ${failedTests}"
                     }
-                    echo "Failed tests: ${failedTests}"
-                }
-                    
+
                     // create a JSON payload for each failed test
                     def bugPayloads = []
                     for (failedTest in failedTests) {
@@ -36,7 +36,7 @@ pipeline {
 
                         bugPayloads.add(bugPayload)
                     }
-                    
+
                     // send the JSON payloads to the bug tracker application
                     for (bugPayload in bugPayloads) {
                         sh "echo '${bugPayload}' | http POST http://localhost:8081/Bug"
@@ -47,6 +47,20 @@ pipeline {
         stage('Deploy') {
             steps {
                 sh 'mvn deploy'
+            }
+        }
+    }
+    post {
+        always {
+            stage('Report Bugs') {
+                steps {
+                    // Report bugs here
+                }
+            }
+            stage('Deploy') {
+                steps {
+                    // Deploy code here
+                }
             }
         }
     }
