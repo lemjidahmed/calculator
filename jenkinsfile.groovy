@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'mvn package -Dsk ipTests\n'
+                sh 'mvn package'
 
 
         }
