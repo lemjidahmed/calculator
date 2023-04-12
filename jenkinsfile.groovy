@@ -52,8 +52,7 @@ pipeline {
     }
     post {
         always {
-                steps {
-                    script {
+
                         junit 'target/surefire-reports/*.xml'
                         script {
                             def failedTests = []
@@ -80,8 +79,7 @@ pipeline {
                         for (bugPayload in bugPayloads) {
                             sh "echo '${bugPayload}' | http POST http://localhost:8081/Bug"
                         }
-                    }
-                }
+
 
         }
     }
