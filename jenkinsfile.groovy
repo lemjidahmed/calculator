@@ -52,7 +52,6 @@ pipeline {
     }
     post {
         always {
-            stage('Report Bugs') {
                 steps {
                     script {
                         junit 'target/surefire-reports/*.xml'
@@ -83,12 +82,7 @@ pipeline {
                         }
                     }
                 }
-            }
-            stage('Deploy') {
-                steps {
-                    sh 'mvn deploy'
-                }
-            }
+
         }
     }
 }
