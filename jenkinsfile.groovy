@@ -5,7 +5,7 @@ pipeline {
             steps {
                 sh 'mvn package'
 
-
+            }
         }
         stage('Test') {
             steps {
