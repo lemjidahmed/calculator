@@ -19,6 +19,7 @@ pipeline {
                     def bugPayloads = []
                     for (failedTest in failedTests) {
                         def bugPayload = [:]
+                        bugPayload['id'] = null
                         bugPayload['title'] = "Bug in test ${failedTest.name}"
                         bugPayload['status'] = 'Non-Resolved'
                         bugPayload['description'] = "Test failed with error message: ${failedTest.error}"
