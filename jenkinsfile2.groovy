@@ -38,7 +38,6 @@ pipeline {
                         bugPayload['status'] = 'Non-Resolved'
                         bugPayload['description'] = "Test failed with error message: ${failedTest}"
                         bugPayload['projectname'] = "calculator-project"
-                        echo ${bugPayload}
                         bugPayloads.add(bugPayload)
                     }
                     echo "Bug Payloads: ${bugPayloads}"
