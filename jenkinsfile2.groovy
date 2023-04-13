@@ -43,7 +43,9 @@ pipeline {
 
                         bugPayloads.add(bugPayload)
                     }
-                    echo "Bug Payloads: ${bugPayloads}"
+                    script {
+                        echo "Bug Payloads: ${bugPayloads}"
+                    }
 
 
                     // send the JSON payloads to the bug tracker application
