@@ -47,7 +47,7 @@ pipeline {
                     for (bugPayload in bugPayloads) {
                         def bugPayloadJson = new groovy.json.JsonBuilder(bugPayload).toPrettyString()
 
-                        sh "http.post(url: 'http://localhost:8081/Bug', contentType: 'application/json', body: bugPayloadJson)"
+                        http.post(url: 'http://localhost:8081/Bug', contentType: 'application/json', body: bugPayloadJson)
                     }
                 }
             }
