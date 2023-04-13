@@ -29,9 +29,6 @@ pipeline {
                             failedTests.add(it.getFullName())
                         }
                         echo "Failed tests: ${failedTests}"
-
-
-                    // create a JSON payload for each failed test
                     def bugPayloads = []
                     for (failedTest in failedTests) {
                         def bugPayload = [:]
@@ -47,11 +44,7 @@ pipeline {
 
 
 
-                    // send the JSON payloads to the bug tracker application
-//                    for (bugPayload in bugPayloads) {
-//                        echo "F:${bugPayload}"
-//                        sh "echo '${bugPayload}' | http POST http://localhost:8081/Bug"
-//                    }
+
                 }
             }
         }
