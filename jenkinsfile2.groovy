@@ -39,13 +39,12 @@ pipeline {
                         bugPayload['title'] = "Bug in test ${failedTest.name}"
                         bugPayload['status'] = 'Non-Resolved'
                         bugPayload['description'] = "Test failed with error message: ${failedTest.error}"
-                        bugPayload['projectname'] = projectName
-
+                        bugPayload['projectname'] = "calculator-project"
+"
                         bugPayloads.add(bugPayload)
                     }
-                    script {
                         echo "Bug Payloads: ${bugPayloads}"
-                    }
+
 
 
                     // send the JSON payloads to the bug tracker application
