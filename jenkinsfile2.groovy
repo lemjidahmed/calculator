@@ -23,34 +23,31 @@ pipeline {
             steps {
                 script {
                     junit 'target/surefire-reports/*.xml'
-                    script {
                         def failedTests = []
                         def results = currentBuild.rawBuild.getAction(hudson.tasks.junit.TestResultAction.class).getResult()
                         results.getFailedTests().each {
                             failedTests.add(it.getFullName())
                         }
                         echo "Failed tests: ${failedTests}"
-                    }
-
-                    // create a JSON payload for each failed test
+                        echo "eeeee"
                     def bugPayloads = []
                     for (failedTest in failedTests) {
                         def bugPayload = [:]
-                        bugPayload['id'] = null
                         bugPayload['title'] = "Bug in test ${failedTest}"
                         bugPayload['status'] = 'Non-Resolved'
                         bugPayload['description'] = "Test failed with error message: ${failedTest}"
                         bugPayload['projectname'] = "calculator-project"
-
                         bugPayloads.add(bugPayload)
                     }
-                    echo "Bugs: ${bugPayloads}"
+                    echo "Bug Payloads: ${bugPayloads}"
+
+
+
                     // send the JSON payloads to the bug tracker application
                     for (bugPayload in bugPayloads) {
                         def bugPayloadJson = new groovy.json.JsonBuilder(bugPayload).toPrettyString()
 
                         sh "http.post(url: 'http://localhost:8081/Bug', contentType: 'application/json', body: bugPayloadJson)"
-
                     }
                 }
             }
