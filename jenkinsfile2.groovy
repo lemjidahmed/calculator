@@ -34,7 +34,7 @@ pipeline {
                     for (failedTest in failedTests) {
                         def bugPayload = [:]
                         bugPayload['title'] = "Bug in test ${failedTest}"
-                        echo "name test: ${failedTests}"
+                        echo "name test: ${bugPayload['title']}"
                         bugPayload['status'] = 'Non-Resolved'
                         bugPayload['description'] = "Test failed with error message: ${failedTest}"
                         bugPayload['projectname'] = "calculator-project"
