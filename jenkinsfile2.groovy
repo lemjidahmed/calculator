@@ -42,7 +42,7 @@ pipeline {
                         bugPayload['projectname'] = "calculator-project"
                         bugPayloads.add(bugPayload)
                     }
-                        echo "Bug Payloads: ${bugPayloads}"
+                    println "Bug Payloads: ${bugPayloads}"
 
 
 
