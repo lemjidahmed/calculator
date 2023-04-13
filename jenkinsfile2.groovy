@@ -22,7 +22,6 @@ pipeline {
         stage('Report Bugs') {
             steps {
                 script {
-                    sh 'mvn test'
                     junit 'target/surefire-reports/*.xml'
                     script {
                         def failedTests = []
