@@ -23,13 +23,13 @@ pipeline {
             steps {
                 script {
                     junit 'target/surefire-reports/*.xml'
-                        def failedTests = []
-                        def results = currentBuild.rawBuild.getAction(hudson.tasks.junit.TestResultAction.class).getResult()
-                        results.getFailedTests().each {
-                            failedTests.add(it.getFullName())
-                        }
-                        echo "Failed tests: ${failedTests}"
-                        echo "eeeee"
+                    def failedTests = []
+                    def results = currentBuild.rawBuild.getAction(hudson.tasks.junit.TestResultAction.class).getResult()
+                    results.getFailedTests().each {
+                        failedTests.add(it.getFullName())
+                    }
+                    echo "Failed tests: ${failedTests}"
+                    echo "eeeee"
                     def bugPayloads = []
                     for (failedTest in failedTests) {
                         def bugPayload = [:]
@@ -42,7 +42,6 @@ pipeline {
                     echo "Bug Payloads: ${bugPayloads}"
 
 
-
                     // send the JSON payloads to the bug tracker application
                     for (bugPayload in bugPayloads) {
                         def bugPayloadJson = new groovy.json.JsonBuilder(bugPayload).toPrettyString()
@@ -51,13 +50,14 @@ pipeline {
                         echo "F:${bugPayload}"
                         sh "echo '${bugPayloadJson}' | http POST http://localhost:8081/Bug"
                     }
-                    }
                 }
             }
+        }
         stage('Deploy') {
             steps {
                 sh 'mvn deploy'
             }
         }
 
+    }
 }
