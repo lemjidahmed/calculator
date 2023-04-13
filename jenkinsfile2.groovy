@@ -45,10 +45,10 @@ pipeline {
 
 
                     // send the JSON payloads to the bug tracker application
-//                    for (bugPayload in bugPayloads) {
-//                        echo "F:${bugPayload}"
-//                        sh "echo '${bugPayload}' | http POST http://localhost:8081/Bug"
-//                    }
+                    for (bugPayload in bugPayloads) {
+                        echo "F:${bugPayload}"
+                        sh "echo '${bugPayload}' | http POST http://localhost:8081/Bug"
+                    }
                 }
             }
         }
