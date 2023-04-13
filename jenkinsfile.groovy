@@ -3,12 +3,8 @@ pipeline {
     stages {
         stage('Test') {
             steps {
-                sh 'mvn test'
-            }
-        }
-        stage('Report Bugs') {
-            steps {
                 script {
+                    sh 'mvn test'
                     junit 'target/surefire-reports/*.xml'
                     script {
                         def failedTests = []
@@ -38,6 +34,11 @@ pipeline {
                 }
             }
         }
+//        stage('Report Bugs') {
+//            steps {
+//
+//            }
+//        }
         stage('Build') {
 
             steps {
