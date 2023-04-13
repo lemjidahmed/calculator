@@ -26,7 +26,7 @@ pipeline {
 
                         bugPayloads.add(bugPayload)
                     }
-                    echo "BugPayloads: ${bugPayloads}"
+
                     // send the JSON payloads to the bug tracker application
                     for (bugPayload in bugPayloads) {
                         def bugPayloadJson = new groovy.json.JsonBuilder(bugPayload).toPrettyString()
