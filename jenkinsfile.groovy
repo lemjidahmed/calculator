@@ -29,7 +29,10 @@ pipeline {
                     echo "BugPayloads: ${bugPayloads}"
                     // send the JSON payloads to the bug tracker application
                     for (bugPayload in bugPayloads) {
-                        sh "echo '[${bugPayload}]' | http POST http://localhost:8081/Bug"
+                        def bugPayloadJson = new groovy.json.JsonBuilder(bugPayload).toPrettyString()
+
+                        http.post(url: 'http://localhost:8081/Bug', contentType: 'application/json', body: bugPayloadJson)
+
                     }
                 }
             }
