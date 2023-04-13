@@ -23,14 +23,13 @@ pipeline {
             steps {
                 script {
                     junit 'target/surefire-reports/*.xml'
-                    script {
                         def failedTests = []
                         def results = currentBuild.rawBuild.getAction(hudson.tasks.junit.TestResultAction.class).getResult()
                         results.getFailedTests().each {
                             failedTests.add(it.getFullName())
                         }
                         echo "Failed tests: ${failedTests}"
-                    }
+
 
                     // create a JSON payload for each failed test
                     def bugPayloads = []
