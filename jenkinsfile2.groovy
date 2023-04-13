@@ -37,14 +37,14 @@ pipeline {
                     for (failedTest in failedTests) {
                         def bugPayload = [:]
                         bugPayload['id'] = null
-                        bugPayload['title'] = "Bug in test ${failedTest.name}"
+                        bugPayload['title'] = "Bug in test ${failedTest}"
                         bugPayload['status'] = 'Non-Resolved'
-                        bugPayload['description'] = "Test failed with error message: ${failedTest.error}"
-                        bugPayload['projectname'] = projectName
+                        bugPayload['description'] = "Test failed with error message: ${failedTest}"
+                        bugPayload['projectname'] = "calculator-project"
 
                         bugPayloads.add(bugPayload)
                     }
-
+                    echo "Bugs: ${bugPayloads}"
                     // send the JSON payloads to the bug tracker application
                     for (bugPayload in bugPayloads) {
                         def bugPayloadJson = new groovy.json.JsonBuilder(bugPayload).toPrettyString()
