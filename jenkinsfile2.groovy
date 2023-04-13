@@ -1,7 +1,25 @@
 pipeline {
     agent any
     stages {
+        stage('Build') {
+
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'mvn package'
+                }
+
+            }
+
+        }
         stage('Test') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'mvn test'
+                }
+
+            }
+        }
+        stage('Report Bugs') {
             steps {
                 script {
                     sh 'mvn test'
@@ -38,20 +56,6 @@ pipeline {
                 }
             }
         }
-//        stage('Report Bugs') {
-//            steps {
-//
-//            }
-//        }
-        stage('Build') {
-
-            steps {
-
-                sh 'mvn package'
-            }
-
-        }
-
         stage('Deploy') {
             steps {
                 sh 'mvn deploy'
