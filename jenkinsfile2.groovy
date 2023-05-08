@@ -33,7 +33,8 @@ pipeline {
                     def bugPayloads = []
                     for (failedTest in failedTests) {
                         def bugPayload = [:]
-                        bugPayload['title'] = "Bug in test ${failedTest}"
+                        def title = failedTest.substringBefore('.')
+                        bugPayload['title'] = "Bug in test ${title}"
                         bugPayload['status'] = 'Non-Resolved'
                         bugPayload['description'] = "Test failed with error message: ${failedTest}"
                         bugPayload['projectname'] = "calculator-project"
