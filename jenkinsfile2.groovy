@@ -32,10 +32,11 @@ pipeline {
                     echo "eeeee"
                     def bugPayloads = []
                     for (failedTest in failedTests) {
+                        def className = failedTest.split("\\.")[0]
+                        def methodName = failedTest.split("\\.")[1]
                         def bugPayload = [:]
-                        def title = failedTest.substringBefore('.')
                         echo "Failed tests: ${title}"
-                        bugPayload['title'] = "Bug in test ${title}"
+                        bugPayload['title'] = "Bug in test ${methodName} in class ${className}"
                         bugPayload['status'] = 'Non-Resolved'
                         bugPayload['description'] = "Test failed with error message: ${failedTest}"
                         bugPayload['projectname'] = "calculator-project"
