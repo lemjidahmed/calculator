@@ -34,6 +34,7 @@ pipeline {
                     for (failedTest in failedTests) {
                         def bugPayload = [:]
                         def title = failedTest.substringBefore('.')
+                        echo "Failed tests: ${title}"
                         bugPayload['title'] = "Bug in test ${title}"
                         bugPayload['status'] = 'Non-Resolved'
                         bugPayload['description'] = "Test failed with error message: ${failedTest}"
